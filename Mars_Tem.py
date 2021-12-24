@@ -13,8 +13,12 @@ class Mars():
         self.url = "https://api.nasa.gov/insight_weather/?api_key=mqBn4UPKAYgA2QudGfROnCLaLE5lktHLUznRwXee&feedtype=json&ver=1.0"
         self.resp_json = None
         self.data = None
-        self.mars_temp = None
 
+        #Mars Weather
+        self.sol_day = None
+        self.mars_temp = None
+        self.wind_speed = None
+        self.atmospheric_press = None
 
 
 
@@ -27,14 +31,28 @@ class Mars():
 
 
 
-    def get_temp(self):
+    def get_actual_sol_day(self):
 
-        None
+        tem_sol_days = self.data["sol_keys"][int(len(self.data["sol_keys"])) - 1]
+        self.sol_day = tem_sol_days
 
 
 
+    def get_temp_mars(self):
 
-if __name__ == "__main__":
+        # Mars temp in F
+        self.mars_temp = self.data[self.sol_day]["AT"]["av"]
 
-    mars = Mars()
-    mars.request()
+
+
+    def get_wind_mars(self):
+
+        # Wind speed in m/s
+        self.wind_speed = self.data[self.sol_day]["HWS"]["av"]
+
+
+
+    def get_pressure_mars(self):
+
+        # Atmospheric pressure in Pa
+        self.atmospheric_press = self.data[self.sol_day]["PRE"]["av"]
